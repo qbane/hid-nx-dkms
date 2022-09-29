@@ -2228,8 +2228,9 @@ static int nx_con_leds_create(struct nx_con *con)
 		}
 		/* Set the home LED to 0 as default state */
 		if ((ret = nx_con_home_led_brightness_set(led, 0))) {
-			hid_err(hdev, "Failed to set home LED dflt; ret=%d\n", ret);
-			return ret;
+			// Some 3rd-party controllers do not have home LED,
+			// so do not bail out here
+			hid_warn(hdev, "Failed to set home LED dflt; ret=%d\n", ret);
 		}
 	}
 
